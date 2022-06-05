@@ -1,20 +1,14 @@
+<script setup>
+
+</script>
+
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hi me" />
   <div class="my-10">
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
   </div>
   <router-view />
 </template>
-
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  components: {HelloWorld}
-}
-</script>
 
 <style>
 #app {

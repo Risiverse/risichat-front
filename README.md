@@ -1,6 +1,6 @@
-# Best Website Ever
+# Risichat front
 
-### The production version can be seen at [my-project.com](https://my-project.com) 🎉
+### The production version can be seen at [chat.risiverse.com](https://chat.risiverse.com) 🎉
 
 #### To install locally, run `npm install` first, then `npm run dev`.
 #### To compile for production run `npm run build`.
