@@ -1,3 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "HindMadurai";
+    font-weight: 400;
+    font-style: normal;
+    font-display: auto;
+    unicode-range: U+000-5FF;
+    src: local("NotoSans"), url("fonts/HindMadurai-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "HindMadurai";
+    font-weight: 500;
+    font-style: normal;
+    font-display: auto;
+    unicode-range: U+000-5FF;
+    src: local("NotoSans"), url("fonts/HindMadurai-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "HindMadurai";
+    font-weight: 600;
+    font-style: normal;
+    font-display: auto;
+    unicode-range: U+000-5FF;
+    src: local("NotoSans"), url("fonts/HindMadurai-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Rubik";
+    font-weight: 400;
+    font-style: normal;
+    font-display: auto;
+    unicode-range: U+000-5FF;
+    src: local("Rubik"), url("fonts/Rubik-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Rubik";
+    font-weight: 500;
+    font-style: normal;
+    font-display: auto;
+    unicode-range: U+000-5FF;
+    src: local("Rubik"), url("fonts/Rubik-Medium.ttf") format("truetype");
+}
