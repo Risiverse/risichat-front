@@ -1,6 +1,6 @@
 <template>
     <div class="flex py-10 w-full justify-between items-center">
-        <ArrowNarrowLeftIcon class="w-5 h-5 text-primary ml-0" />
+        <RouterLink to="/"><ArrowNarrowLeftIcon class="w-5 h-5 text-primary ml-0" /></RouterLink>
         <h1 class="font-title font-bold text-2xl">{{ groupe.name }}</h1>
         <img :src="groupe.iconUrl" class="h-7 w-7 rounded-full object-cover" alt="Groupe image">
     </div>
