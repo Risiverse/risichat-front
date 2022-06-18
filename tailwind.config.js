@@ -6,8 +6,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#465FFD',
-        'grey-bg': '#F3F4FA'
+        primary: '#465FFD'
       },
       fontFamily: {
         'title': 'HindMadurai, sans-serif',

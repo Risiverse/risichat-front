@@ -1,9 +1,20 @@
 import {defineStore} from "pinia";
 
-export const useSettings = defineStore('settings', {
+export const useSettingsStore = defineStore('settings', {
     state: () => {
         return {
-            username: 'Elliot'
+            username: ''
+        }
+    },
+
+    actions: {
+        async loginUser(username) {
+            if (typeof username === "string") {
+                this.username = username
+                localStorage.setItem('username', username);
+            } else {
+                throw new Error('Invalid username');
+            }
         }
     }
 })
