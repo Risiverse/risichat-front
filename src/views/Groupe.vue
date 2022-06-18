@@ -11,14 +11,14 @@
 
         <div class="mt-auto responsive-container w-full" ref="messagesContainer">
             <div v-for="message in groupe.messages" class="bg-grey-bg p-2 rounded-lg my-4">
-                <p>{{ message.data.content }}</p>
+                <p>{{ message.content }}</p>
             </div>
         </div>
 
-        <div class="backdrop-blur responsive-container bg-white/60 sticky bottom-0 w-full py-5 flex justify-between items-center">
-            <input type="text" contenteditable class="border-primary border-2 rounded w-full focus:outline-none focus:ring-1 focus:ring-primary py-1 px-2" placeholder="Say something...">
+        <form @submit.prevent="addMessage" class="backdrop-blur responsive-container bg-white/60 sticky bottom-0 w-full py-5 flex justify-between items-center">
+            <input v-model="userInputMessage" type="text" contenteditable class="border-primary border-2 rounded w-full focus:outline-none focus:ring-1 focus:ring-primary py-1 px-2" placeholder="Say something...">
             <PaperAirplaneIcon @click="addMessage" class="w-7 h-7 text-primary rotate-45 w-1/12 ml-5 -mt-1 cursor-pointer" />
-        </div>
+        </form>
     </div>
 </template>
 
@@ -32,22 +32,31 @@ import {useSettingsStore} from "@/stores/settings";
 const groupesStore = useGroupesStore()
 const settingsStore = useSettingsStore()
 const route = useRoute()
+
+let wsServer = ref(null)
 const messagesContainer = ref(null)
 let maxScroll = ref(0)
+const userInputMessage = ref('')
 const groupe = groupesStore.getGroupeById(route.params.id)
 
 function addMessage() {
-    groupe.messages.push({
-        userSSOID: 7598027543298,
+    const message = {
+        userSSOID: 1000000001,
         type: 'chatMessage',
         data: {
-            timestamp: 7809378532907,
-            username: 'Elliot',
-            content: 'Test nouveau message'
+            username: settingsStore.username,
+            content: userInputMessage.value
         }
-    })
-}
+    }
 
+    wsServer.value.send(JSON.stringify(message))
+    groupe.messages.push({
+        timestamp: Date.now(),
+        username: settingsStore.username,
+        content: userInputMessage.value
+    })
+    userInputMessage.value = ''
+}
 
 
 async function scrollToBottom () {
@@ -58,6 +67,15 @@ async function scrollToBottom () {
 
 onMounted(async () => {
     await scrollToBottom()
+
+    wsServer.value = new WebSocket('ws://localhost:7000')
+    wsServer.value.onopen = function(event) {
+        console.log("Successfully connected to the websocket server.")
+    }
+
+    wsServer.value.onmessage = function(event) {
+        groupe.messages.push(JSON.parse(event.data))
+    }
 })
 
 watch(groupe.messages, async () => {
