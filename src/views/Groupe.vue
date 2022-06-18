@@ -10,9 +10,7 @@
         </div>
 
         <div class="mt-auto responsive-container w-full" ref="messagesContainer">
-            <div v-for="message in groupe.messages" class="bg-grey-bg p-2 rounded-lg my-4">
-                <p>{{ message.content }}</p>
-            </div>
+            <MessageItem v-for="message in groupe.messages" class="bg-grey-bg p-2 rounded-lg my-4" :message="message"/>
         </div>
 
         <form @submit.prevent="addMessage" class="backdrop-blur responsive-container bg-white/60 sticky bottom-0 w-full py-5 flex justify-between items-center">
@@ -24,10 +22,11 @@
 
 <script setup>
 import {useRoute} from 'vue-router';
-import {ref, onMounted, nextTick, watch} from "vue";
+import {nextTick, onMounted, ref, watch} from "vue";
 import {useGroupesStore} from "@/stores/groupes";
-import {ArrowNarrowLeftIcon, PaperAirplaneIcon} from  '@heroicons/vue/solid';
+import {ArrowNarrowLeftIcon, PaperAirplaneIcon} from '@heroicons/vue/solid';
 import {useSettingsStore} from "@/stores/settings";
+import MessageItem from "@/components/MessageItem.vue";
 
 const groupesStore = useGroupesStore()
 const settingsStore = useSettingsStore()
@@ -74,8 +73,15 @@ onMounted(async () => {
     }
 
     wsServer.value.onmessage = function(event) {
+        const newMessage = JSON.parse(event.data)
+
+        if (newMessage.status === 400) {
+            //TODO: Vérifier suppression
+            groupesStore.removeOldestNotConfirmed(route.params.id)
+        }
         groupe.messages.push(JSON.parse(event.data))
     }
+
 })
 
 watch(groupe.messages, async () => {
@@ -85,6 +91,3 @@ watch(groupe.messages, async () => {
 })
 </script>
 
-<style scoped>
-
-</style>

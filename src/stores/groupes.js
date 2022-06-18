@@ -18,6 +18,12 @@ export const useGroupesStore = defineStore('groupes', {
     actions: {
         getGroupeById(id) {
             return this.groupes.find((element) => element.id === parseInt(id))
+        },
+
+        removeOldestNotConfirmed(id) {
+            const groupIndex = this.groupes.findIndex((element) => element.id === parseInt(id))
+            const oldestNotConfirmedIndex = groupes[groupIndex].messages.findIndex(message => message.confirmed === false)[0]
+            groupes[groupIndex].messages.splice(oldestNotConfirmedIndex, 1)
         }
     }
 })
