@@ -5,6 +5,7 @@ import Home from "@/views/Home.vue";
 const routes = [
     {path: '/', name: 'Home', component: Home},
     {path: '/groupe/:id/:name', name: 'Groupe', component: ()=>import('@/views/Groupe.vue')},
+    {path: '/login', name: 'Login', component: ()=>import('@/views/Login.vue')},
 ]
 
 const scrollBehavior = (to, from, savedPosition) => {

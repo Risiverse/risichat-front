@@ -8,7 +8,8 @@ export const useGroupesStore = defineStore('groupes', {
                     name: 'Global',
                     description: 'Le canal général de risichat',
                     id: 1,
-                    iconUrl: 'https://i.imgur.com/mtPxQs5.jpeg'
+                    iconUrl: 'https://i.imgur.com/mtPxQs5.jpeg',
+                    messages: []
                 }
             ]
         }
