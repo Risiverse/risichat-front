@@ -9,7 +9,7 @@
 import Navbar from '@/components/Navbar.vue';
 import {useSettingsStore} from "@/stores/settings";
 import {useRoute, useRouter} from "vue-router";
-import {watch} from 'vue';
+import {onMounted, watch} from 'vue';
 
 const route = useRoute()
 const router = useRouter()
@@ -17,6 +17,15 @@ const settingsStore = useSettingsStore()
 
 watch(route, () => {
     if (!settingsStore.username && route.name !== 'Login') {
+        router.push({name: 'Login'})
+    }
+})
+
+onMounted(() => {
+    if (localStorage.getItem('username')) {
+        settingsStore.username = localStorage.getItem('username')
+        router.push({name: 'Home'})
+    } else {
         router.push({name: 'Login'})
     }
 })
