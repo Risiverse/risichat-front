@@ -10,7 +10,7 @@
         </div>
 
         <div class="mt-auto responsive-container w-full" ref="messagesContainer">
-            <MessageItem v-for="message in groupe.messages" class="bg-grey-bg p-2 rounded-lg my-4" :message="message"/>
+            <MessageItem v-for="message in groupe.messages" :message="message"/>
         </div>
 
         <form @submit.prevent="addMessage" class="backdrop-blur responsive-container bg-white/60 sticky bottom-0 w-full py-5 flex justify-between items-center">
