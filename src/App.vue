@@ -45,6 +45,13 @@ onMounted(() => {
 
 @font-face {
     font-family: "HindMadurai";
+    font-weight: 400;
+    font-style: normal;
+    src: url("@/assets/fonts/HindMadurai-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "HindMadurai";
     font-weight: 500;
     font-style: normal;
     src: url("@/assets/fonts/HindMadurai-Medium.ttf") format("truetype");
