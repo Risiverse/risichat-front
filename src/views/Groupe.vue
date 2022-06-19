@@ -67,7 +67,7 @@ async function scrollToBottom () {
 onMounted(async () => {
     await scrollToBottom()
 
-    wsServer.value = new WebSocket('ws://chat.risiverse.com:7000')
+    wsServer.value = new WebSocket('wss://ws-chat.risiverse.com')
     wsServer.value.onopen = function(event) {
         console.log("Successfully connected to the websocket server.")
     }
