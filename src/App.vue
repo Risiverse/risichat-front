@@ -24,7 +24,9 @@ watch(route, () => {
 onMounted(() => {
     if (localStorage.getItem('username')) {
         settingsStore.username = localStorage.getItem('username')
-        router.push({name: 'Home'})
+        if (route.name === 'Login') {
+            router.push({name: 'Home'})
+        }
     } else {
         router.push({name: 'Login'})
     }
@@ -39,5 +41,33 @@ onMounted(() => {
 
 #app {
   @apply font-text
+}
+
+@font-face {
+    font-family: "HindMadurai";
+    font-weight: 500;
+    font-style: normal;
+    src: url("@/assets/fonts/HindMadurai-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "HindMadurai";
+    font-weight: 600;
+    font-style: normal;
+    src: url("@/assets/fonts/HindMadurai-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Rubik";
+    font-weight: 400;
+    font-style: normal;
+    src: url("@/assets/fonts/Rubik-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Rubik";
+    font-weight: 500;
+    font-style: normal;
+    src: url("@/assets/fonts/Rubik-Medium.ttf") format("truetype");
 }
 </style>
