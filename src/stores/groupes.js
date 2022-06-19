@@ -26,7 +26,7 @@ export const useGroupesStore = defineStore('groupes', {
             if (messageIndex !== 0) {
                 return this.groupes[groupeIndex].messages[messageIndex - 1].username
             } else {
-                return false
+                return ''
             }
         },
 
@@ -34,9 +34,9 @@ export const useGroupesStore = defineStore('groupes', {
             const groupeIndex = this.groupes.findIndex((element) => element.id = parseInt(groupeId))
 
             if (this.groupes[groupeIndex].messages[messageIndex + 1]) {
-                return this.groupes[groupeIndex].messages[messageIndex - 1].username
+                return this.groupes[groupeIndex].messages[messageIndex + 1].username
             } else {
-                return false
+                return ''
             }
         }
 
