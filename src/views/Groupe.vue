@@ -10,7 +10,7 @@
         </div>
 
         <div class="mt-auto responsive-container w-full" ref="messagesContainer">
-            <MessageItem v-for="message in groupe.messages" :message="message"/>
+            <MessageItem v-for="(message, index) in groupe.messages" :message="message" :index="index" :groupeId="route.params.id"/>
         </div>
 
         <form @submit.prevent="addMessage" class="backdrop-blur responsive-container bg-white/60 sticky bottom-0 w-full py-5 flex justify-between items-center">
@@ -77,7 +77,7 @@ onMounted(async () => {
 
         if (newMessage.status === 400) {
             //TODO: Vérifier suppression
-            groupesStore.removeOldestNotConfirmed(route.params.id)
+            // groupesStore.removeOldestNotConfirmed(route.params.id)
         }
         groupe.messages.push(JSON.parse(event.data))
     }
