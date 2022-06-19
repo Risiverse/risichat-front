@@ -20,10 +20,30 @@ export const useGroupesStore = defineStore('groupes', {
             return this.groupes.find((element) => element.id === parseInt(id))
         },
 
-        removeOldestNotConfirmed(id) {
-            const groupIndex = this.groupes.findIndex((element) => element.id === parseInt(id))
-            const oldestNotConfirmedIndex = groupes[groupIndex].messages.findIndex(message => message.confirmed === false)[0]
-            groupes[groupIndex].messages.splice(oldestNotConfirmedIndex, 1)
+        getPreviousMessageUsername(messageIndex, groupeId) {
+            const groupeIndex = this.groupes.findIndex((element) => element.id = parseInt(groupeId))
+
+            if (messageIndex !== 0) {
+                return this.groupes[groupeIndex].messages[messageIndex - 1].username
+            } else {
+                return ''
+            }
+        },
+
+        getNextMessageUsername(messageIndex, groupeId) {
+            const groupeIndex = this.groupes.findIndex((element) => element.id = parseInt(groupeId))
+
+            if (this.groupes[groupeIndex].messages[messageIndex + 1]) {
+                return this.groupes[groupeIndex].messages[messageIndex + 1].username
+            } else {
+                return ''
+            }
         }
+
+        // removeOldestNotConfirmed(id) {
+        //     const groupIndex = this.groupes.findIndex((element) => element.id === parseInt(id))
+        //     const oldestNotConfirmedIndex = groupes[groupIndex].messages.findIndex(message => message.confirmed === false)[0]
+        //     groupes[groupIndex].messages.splice(oldestNotConfirmedIndex, 1)
+        // }
     }
 })

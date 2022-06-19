@@ -2,7 +2,7 @@
     <nav class="fixed shadow-2xl flex justify-around w-full z-10 py-5 bottom-0">
         <RouterLink to="/"><CogIcon class="text-gray-300 h-7 w-7" /></RouterLink>
         <RouterLink to="/"><ChatAlt2Icon class="text-primary h-7 w-7" /></RouterLink>
-        <LogoutIcon @click="logout" class="text-gray-300 h-7 w-7" />
+        <LogoutIcon @click="logout" class="text-gray-300 h-7 w-7 cursor-pointer" />
     </nav>
 </template>
 
