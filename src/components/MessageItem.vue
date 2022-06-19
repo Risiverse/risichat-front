@@ -4,7 +4,7 @@
         <p v-if="showDate && isAuthor" class="text-xs ml-2 self-end">{{ timeMessage }}</p>
         <div @click="showDate = !showDate" class="p-2 ml-2 flex flex-col" :class="radiusClass">
             <p v-if="!isAuthor && isFirstChained" class="text-sm text-primary font-bold">{{ message.username }}</p>
-            <p>{{ message.content }}</p>
+            <p>{{ unescapedMessage }}</p>
         </div>
         <p v-if="showDate && !isAuthor" class="text-xs ml-2 self-end">{{ timeMessage }}</p>
     </div>
@@ -50,6 +50,15 @@ const radiusClass= computed(() => {
     }
 
     return classes.join(' ')
+})
+
+const unescapedMessage = computed(() => {
+    return props.message.content
+        .replaceAll('&amp;', '&')
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>')
+        .replaceAll('&quot;', '"')
+        .replaceAll("&#039;", '\'')
 })
 
 const isChained = computed(() => {
