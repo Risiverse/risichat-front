@@ -39,7 +39,7 @@ const userInputMessage = ref('')
 const groupe = groupesStore.getGroupeById(route.params.id)
 
 function addMessage() {
-    if (userInputMessage.value) {
+    if (userInputMessage.value && wsServer.value.readyState === 1) {
         const message = {
             userSSOID: 1000000001,
             type: 'chatMessage',
