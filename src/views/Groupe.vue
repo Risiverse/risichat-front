@@ -98,7 +98,12 @@ onMounted(async () => {
 
     wsServer.value.onmessage = function(event) {
         const newMessage = JSON.parse(event.data)
-        groupe.messages.push(JSON.parse(event.data))
+        groupe.messages.push({
+            timestamp: newMessage.timestamp,
+            type: 'message',
+            username: newMessage.username,
+            content: newMessage.content
+        })
     }
 
 })
