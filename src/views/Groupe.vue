@@ -14,7 +14,7 @@
         </div>
 
         <form @submit.prevent="addMessage" class="backdrop-blur responsive-container bg-white/60 dark:bg-gray-800/60 sticky bottom-0 w-full py-5 flex justify-between items-center">
-            <input v-model="userInputMessage" type="text" contenteditable class="border-primary border-2 rounded w-full focus:outline-none focus:ring-1 focus:ring-primary py-1 px-2 dark:text-black" placeholder="Say something...">
+            <input v-model="userInputMessage" type="text" contenteditable class="border-primary border-2 rounded w-full focus:outline-none focus:ring-1 focus:ring-primary py-1 px-2 dark:bg-gray-800" placeholder="Say something...">
             <PaperAirplaneIcon @click="addMessage" class="w-7 h-7 text-primary rotate-45 w-1/12 ml-5 -mt-1 cursor-pointer" />
         </form>
     </div>
@@ -39,22 +39,24 @@ const userInputMessage = ref('')
 const groupe = groupesStore.getGroupeById(route.params.id)
 
 function addMessage() {
-    const message = {
-        userSSOID: 1000000001,
-        type: 'chatMessage',
-        data: {
+    if (userInputMessage.value) {
+        const message = {
+            userSSOID: 1000000001,
+            type: 'chatMessage',
+            data: {
+                username: settingsStore.username,
+                content: userInputMessage.value
+            }
+        }
+
+        wsServer.value.send(JSON.stringify(message))
+        groupe.messages.push({
+            timestamp: Date.now(),
             username: settingsStore.username,
             content: userInputMessage.value
-        }
+        })
+        userInputMessage.value = ''
     }
-
-    wsServer.value.send(JSON.stringify(message))
-    groupe.messages.push({
-        timestamp: Date.now(),
-        username: settingsStore.username,
-        content: userInputMessage.value
-    })
-    userInputMessage.value = ''
 }
 
 
