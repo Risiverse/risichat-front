@@ -15,7 +15,7 @@
 
         <form @submit.prevent="addMessage" class="backdrop-blur responsive-container bg-white/60 dark:bg-gray-800/60 sticky bottom-0 w-full py-5 flex justify-between items-center">
             <input v-model="userInputMessage" type="text" contenteditable class="border-primary border-2 rounded w-full focus:outline-none focus:ring-1 focus:ring-primary py-1 px-2 dark:bg-gray-800" placeholder="Say something...">
-            <PaperAirplaneIcon @click="addMessage" class="w-7 h-7 text-primary rotate-45 w-1/12 ml-5 -mt-1 cursor-pointer" />
+            <PaperAirplaneIcon @click="addMessage" class="w-7 h-7 3xl:w-8 3xl:h-8 3xl:ml-10 text-primary rotate-45 w-1/12 ml-5 -mt-1 cursor-pointer" />
         </form>
     </div>
 </template>

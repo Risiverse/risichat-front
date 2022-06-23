@@ -12,7 +12,11 @@ module.exports = {
       fontFamily: {
         'title': 'HindMadurai, sans-serif',
         'text': 'Rubik, sans-serif'
-      }
+      },
+      screens: {
+        '3xl': '1700px',
+        '4xl': '2400px'
+      },
     },
   },
   plugins: [],
