@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center mb-4" :class="{'justify-end ml-[15%]': isAuthor, 'mr-[15%]': !isAuthor, 'mb-[2px]': isChained}">
+    <div v-if="message.type === 'message'" class="flex items-center mb-4" :class="{'justify-end ml-[15%]': isAuthor, 'mr-[15%]': !isAuthor, 'mb-[2px]': isChained}">
         <img v-if="!isAuthor" src="https://i1.sndcdn.com/avatars-000239937625-wn66b5-t200x200.jpg" class="h-6 w-6 self-end rounded-full object-cover" :class="{'invisible': isChained}" alt="User image">
         <div @click="showDate = !showDate" class="p-2 ml-2 flex flex-col relative" :class="radiusClass">
             <p v-if="showDate && isAuthor" class="text-xs ml-2 self-end absolute bottom-0 -left-12">{{ timeMessage }}</p>
@@ -7,6 +7,10 @@
             <p class="break-words [word-break:break-word]">{{ unescapedMessage }}</p>
             <p v-if="showDate && !isAuthor" class="text-xs ml-2 self-end absolute bottom-0 -right-10">{{ timeMessage }}</p>
         </div>
+    </div>
+
+    <div v-if="message.type === 'info'" class="flex items-center justify-center my-10 mx-14 text-gray-800 dark:text-gray-400 font-title font-bold">
+        <p class="text-center">{{ message.content }}</p>
     </div>
 </template>
 

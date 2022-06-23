@@ -39,11 +39,5 @@ export const useGroupesStore = defineStore('groupes', {
                 return ''
             }
         }
-
-        // removeOldestNotConfirmed(id) {
-        //     const groupIndex = this.groupes.findIndex((element) => element.id === parseInt(id))
-        //     const oldestNotConfirmedIndex = groupes[groupIndex].messages.findIndex(message => message.confirmed === false)[0]
-        //     groupes[groupIndex].messages.splice(oldestNotConfirmedIndex, 1)
-        // }
     }
 })

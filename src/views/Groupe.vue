@@ -52,6 +52,7 @@ function addMessage() {
         wsServer.value.send(JSON.stringify(message))
         groupe.messages.push({
             timestamp: Date.now(),
+            type: 'message',
             username: settingsStore.username,
             content: userInputMessage.value
         })
@@ -70,17 +71,33 @@ onMounted(async () => {
     await scrollToBottom()
 
     wsServer.value = new WebSocket('wss://ws-chat.risiverse.com')
+
     wsServer.value.onopen = function(event) {
-        console.log("Successfully connected to the websocket server.")
+        groupe.messages.push({
+            timestamp: Date.now(),
+            type: 'info',
+            content: `Welcome to the ${groupe.name} room`
+        })
+    }
+
+    wsServer.value.onclose = function (event) {
+        groupe.messages.push({
+            timestamp: Date.now(),
+            type: 'info',
+            content: `Connection closed with the room`
+        })
+    }
+
+    wsServer.value.onerror = function (event) {
+        groupe.messages.push({
+            timestamp: Date.now(),
+            type: 'info',
+            content: `Connection closed with the room`
+        })
     }
 
     wsServer.value.onmessage = function(event) {
         const newMessage = JSON.parse(event.data)
-
-        if (newMessage.status === 400) {
-            //TODO: Vérifier suppression
-            // groupesStore.removeOldestNotConfirmed(route.params.id)
-        }
         groupe.messages.push(JSON.parse(event.data))
     }
 
