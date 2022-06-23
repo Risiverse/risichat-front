@@ -5,6 +5,7 @@ import Home from "@/views/Home.vue";
 const routes = [
     {path: '/', name: 'Home', component: Home},
     {path: '/groupe/:id/:name', name: 'Groupe', component: ()=>import('@/views/Groupe.vue')},
+    {path: '/settings', name: 'Settings', component: ()=>import('@/views/Settings.vue')},
     {path: '/login', name: 'Login', component: ()=>import('@/views/Login.vue')},
 ]
 

@@ -4,7 +4,7 @@
         <p v-if="showDate && isAuthor" class="text-xs ml-2 self-end">{{ timeMessage }}</p>
         <div @click="showDate = !showDate" class="p-2 ml-2 flex flex-col" :class="radiusClass">
             <p v-if="!isAuthor && isFirstChained" class="text-sm text-primary font-bold">{{ message.username }}</p>
-            <p>{{ unescapedMessage }}</p>
+            <p class="break-words [word-break:break-word]">{{ unescapedMessage }}</p>
         </div>
         <p v-if="showDate && !isAuthor" class="text-xs ml-2 self-end">{{ timeMessage }}</p>
     </div>
