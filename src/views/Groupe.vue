@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col min-h-screen">
-        <div class="sticky backdrop-blur responsive-container bg-white/60 top-0 bg flex shadow py-3 w-full justify-between items-center">
+        <div class="sticky backdrop-blur responsive-container bg-white/60 dark:bg-gray-800/60 top-0 bg flex shadow py-3 w-full justify-between items-center">
             <RouterLink to="/"><ArrowNarrowLeftIcon class="w-5 h-5 text-primary ml-0" /></RouterLink>
             <div class="text-center">
                 <h1 class="font-title font-bold text-xl">{{ groupe.name }}</h1>
@@ -13,8 +13,8 @@
             <MessageItem v-for="(message, index) in groupe.messages" :message="message" :index="index" :groupeId="route.params.id"/>
         </div>
 
-        <form @submit.prevent="addMessage" class="backdrop-blur responsive-container bg-white/60 sticky bottom-0 w-full py-5 flex justify-between items-center">
-            <input v-model="userInputMessage" type="text" contenteditable class="border-primary border-2 rounded w-full focus:outline-none focus:ring-1 focus:ring-primary py-1 px-2" placeholder="Say something...">
+        <form @submit.prevent="addMessage" class="backdrop-blur responsive-container bg-white/60 dark:bg-gray-800/60 sticky bottom-0 w-full py-5 flex justify-between items-center">
+            <input v-model="userInputMessage" type="text" contenteditable class="border-primary border-2 rounded w-full focus:outline-none focus:ring-1 focus:ring-primary py-1 px-2 dark:bg-gray-800" placeholder="Say something...">
             <PaperAirplaneIcon @click="addMessage" class="w-7 h-7 text-primary rotate-45 w-1/12 ml-5 -mt-1 cursor-pointer" />
         </form>
     </div>
@@ -39,22 +39,25 @@ const userInputMessage = ref('')
 const groupe = groupesStore.getGroupeById(route.params.id)
 
 function addMessage() {
-    const message = {
-        userSSOID: 1000000001,
-        type: 'chatMessage',
-        data: {
+    if (userInputMessage.value && wsServer.value.readyState === 1) {
+        const message = {
+            userSSOID: 1000000001,
+            type: 'chatMessage',
+            data: {
+                username: settingsStore.username,
+                content: userInputMessage.value
+            }
+        }
+
+        wsServer.value.send(JSON.stringify(message))
+        groupe.messages.push({
+            timestamp: Date.now(),
+            type: 'message',
             username: settingsStore.username,
             content: userInputMessage.value
-        }
+        })
+        userInputMessage.value = ''
     }
-
-    wsServer.value.send(JSON.stringify(message))
-    groupe.messages.push({
-        timestamp: Date.now(),
-        username: settingsStore.username,
-        content: userInputMessage.value
-    })
-    userInputMessage.value = ''
 }
 
 
@@ -68,17 +71,33 @@ onMounted(async () => {
     await scrollToBottom()
 
     wsServer.value = new WebSocket('wss://ws-chat.risiverse.com')
+
     wsServer.value.onopen = function(event) {
-        console.log("Successfully connected to the websocket server.")
+        groupe.messages.push({
+            timestamp: Date.now(),
+            type: 'info',
+            content: `Welcome to the ${groupe.name} room`
+        })
+    }
+
+    wsServer.value.onclose = function (event) {
+        groupe.messages.push({
+            timestamp: Date.now(),
+            type: 'info',
+            content: `Connection closed with the room`
+        })
+    }
+
+    wsServer.value.onerror = function (event) {
+        groupe.messages.push({
+            timestamp: Date.now(),
+            type: 'info',
+            content: `Connection closed with the room`
+        })
     }
 
     wsServer.value.onmessage = function(event) {
         const newMessage = JSON.parse(event.data)
-
-        if (newMessage.status === 400) {
-            //TODO: Vérifier suppression
-            // groupesStore.removeOldestNotConfirmed(route.params.id)
-        }
         groupe.messages.push(JSON.parse(event.data))
     }
 

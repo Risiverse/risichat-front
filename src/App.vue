@@ -1,5 +1,6 @@
 <template>
-    <div class="w-full">
+    <div class="absolute h-screen w-screen -z-50 dark:bg-gray-800"></div>
+    <div class="w-full dark:bg-gray-800 dark:text-white">
         <router-view />
     </div>
     <Navbar v-if="route.name !== 'Groupe' && route.name !== 'Login'" />
@@ -22,6 +23,13 @@ watch(route, () => {
 })
 
 onMounted(() => {
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        settingsStore.toggleDarkMode(true)
+    } else {
+        settingsStore.toggleDarkMode(false)
+    }
+
+
     if (localStorage.getItem('username')) {
         settingsStore.username = localStorage.getItem('username')
         if (route.name === 'Login') {
