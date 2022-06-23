@@ -1,7 +1,7 @@
 <template>
     <div class="responsive-container h-screen flex flex-col justify-center items-center">
         <h1 class="font-title text-4xl mb-16 font-bold">Login</h1>
-        <form @submit.prevent="onSubmit" class="responsive-container sticky bottom-0 w-full py-5 flex justify-between items-center">
+        <form @submit.prevent="onSubmit" class="sticky bottom-0 w-full py-5 flex justify-between items-center">
             <input v-model="inputUsername" type="text" id="username" class="border-primary dark:bg-gray-800 border-2 rounded w-full focus:outline-none focus:ring-1 focus:ring-primary py-1 px-2" placeholder="Enter a username...">
             <ArrowSmRightIcon @click="onSubmit" class="ml-5 w-8 h-8 text-primary cursor-pointer" />
         </form>

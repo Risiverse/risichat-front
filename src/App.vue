@@ -44,7 +44,7 @@ onMounted(() => {
 
 <style>
 .responsive-container{
-    @apply px-5 mx-auto sm:px-10 lg:px-24 2xl:px-48
+    @apply px-5 mx-auto sm:px-10 lg:px-24 2xl:px-48 3xl:px-[36rem] 4xl:px-[46rem]
 }
 
 #app {
