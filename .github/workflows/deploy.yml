@@ -19,7 +19,7 @@ jobs:
           KEY: ${{ secrets.SSHKEY }}
           script: |
             cd /var/www/chat.risiverse.com/
-            git reset --hard HEAD
-            git pull
-            npm install
-            npm run build
+            sudo git reset --hard HEAD
+            sudo git pull
+            sudo npm install
+            sudo npm run build
