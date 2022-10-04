@@ -41,21 +41,22 @@ const groupe = groupesStore.getGroupeById(route.params.id)
 function addMessage() {
     if (userInputMessage.value && wsServer.value.readyState === 1) {
         const message = {
-            userSSOID: 1000000001,
-            type: 'chatMessage',
+            type: "newMessage",
             data: {
+                userSSOID: 1000000001,
                 username: settingsStore.username,
                 content: userInputMessage.value
             }
         }
 
         wsServer.value.send(JSON.stringify(message))
-        groupe.messages.push({
-            timestamp: Date.now(),
-            type: 'message',
-            username: settingsStore.username,
-            content: userInputMessage.value
-        })
+        //TODO: Add temp message deleted when message is sent back by server
+        // groupe.messages.push({
+        //     timestamp: Date.now(),
+        //     type: 'message',
+        //     username: settingsStore.username,
+        //     content: userInputMessage.value
+        // })
         userInputMessage.value = ''
     }
 }
@@ -97,13 +98,22 @@ onMounted(async () => {
     }
 
     wsServer.value.onmessage = function(event) {
+        console.log(event)
         const newMessage = JSON.parse(event.data)
-        groupe.messages.push({
-            timestamp: newMessage.timestamp,
-            type: 'message',
-            username: newMessage.username,
-            content: newMessage.content
-        })
+        if (newMessage.type !== 'newConnection') {
+            groupe.messages.push({
+                timestamp: newMessage.data.timestamp,
+                type: 'message',
+                username: newMessage.data.username,
+                content: newMessage.data.content
+            })
+        } else if (newMessage.type === 'newConnection') {
+            groupe.messages.push({
+                timestamp: Date.now(),
+                type: 'info',
+                content: `New user connected to the room`
+            })
+        }
     }
 
 })
